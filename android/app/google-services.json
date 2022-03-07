@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "862569311274",
+    "project_id": "olx-shop-8dd89",
+    "storage_bucket": "olx-shop-8dd89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862569311274:android:f9736af298cd3687406753",
+        "android_client_info": {
+          "package_name": "com.example.flutter_web_a2hs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862569311274-jbu0q6dhcna4i0ab6i366tdkbfuo6jfr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_web_a2hs",
+            "certificate_hash": "16f005e6b608d5de6c47f29aa7bcb83142fa28b6"
+          }
+        },
+        {
+          "client_id": "862569311274-2ba07qdubjru3ooun8n1e5fjp3hhkk7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6oUPeO8P4h80O73pZAfXTVmP_t3v4FBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862569311274-2ba07qdubjru3ooun8n1e5fjp3hhkk7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

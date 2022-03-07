@@ -2,8 +2,8 @@ const cacheName = "flutter-app-cache-v1";
 const assetsToCache = [
   "/",
   "/index.html",
-  "/icons/196.png",
-  "/icons/512.png",
+  "/icons/android-chrome-192x192.png",
+  "/icons/android-chrome-512x512.png",
 ];
 
 self.addEventListener("install", (event) => {
