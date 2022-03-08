@@ -136,6 +136,7 @@ class _AuthUiState extends State<AuthUi> {
               child: Text(
                 'Login with Email',
                 style: TextStyle(
+                  fontSize: 15,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   decoration: TextDecoration.underline,
