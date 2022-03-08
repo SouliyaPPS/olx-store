@@ -1,11 +1,12 @@
 // @dart=2.9
 // ignore_for_file: deprecated_member_use, unused_local_variable, missing_return
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-import '../main.dart';
 import 'package:geocoder/geocoder.dart';
+import 'login_screen.dart';
 // import 'package:geocode/geocode.dart';
 // import 'package:geocoder2/geocoder2.dart';
 
@@ -55,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
+    print("${first.featureName} : ${first.addressLine}");
     setState(() {
       address = first.addressLine;
     });
@@ -142,21 +144,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Center(
-          child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          RaisedButton(
-            child: const Text('Sign Out'),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => MyApp(),
-                ),
-              );
-            },
-          ),
-        ],
-      )),
+        child: ElevatedButton(
+          child: Text('Sign Out'),
+          onPressed: () {
+            FirebaseAuth.instance.signOut().then((value) => {
+                  Navigator.pushReplacementNamed(context, LoginScreen.id),
+                });
+          },
+        ),
+      ),
     );
   }
 }

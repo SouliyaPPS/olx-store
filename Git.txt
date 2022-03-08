@@ -1,6 +1,6 @@
 git init
 git add .
-git commit -m "olx"
+git commit -m "new"
 git branch -M main
 git remote add origin https://github.com/SouliyaPPS/olx-store.git
 git push -u origin main -f

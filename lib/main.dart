@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_a2hs/screens/authentication/phoneauth_screen.dart';
 import 'screens/MyHomePage.dart';
+import 'screens/authentication/email_auth_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/location_screen.dart';
 import 'screens/login_screen.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         PhoneAuthScreen.id: (context) => PhoneAuthScreen(),
         LocationScreen.id: (context) => LocationScreen(),
         HomeScreen.id: (context) => HomeScreen(),
+        EmailAuthScreen.id: (context) => EmailAuthScreen(),
       },
     );
   }
