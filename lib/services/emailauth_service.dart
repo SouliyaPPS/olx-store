@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+// import '../screens/authentication/emai_verification_screen.dart';
+import '../screens/authentication/emai_verification_screen.dart';
 import '../screens/location_screen.dart';
 
 class EmailAuthentication {
@@ -67,10 +68,23 @@ class EmailAuthentication {
               'email': userCredential.user?.email,
             })
             .then(
-              (value) => {
-                Navigator.pushReplacementNamed(context, LocationScreen.id),
+              (value) async => {
+                //before going to location screen. will send email verification
+                // if (userCredential.user!.emailVerified)
+                //   {
+                //   },
+                await userCredential.user
+                    ?.sendEmailVerification()
+                    .then((value) {
+                  //after sending verifiaction email, screen will move to Email Verification Screen
+                  Navigator.pushReplacementNamed(
+                      context, EmailVerificationScreen.id);
+                }),
               },
             )
+            // .then((value) {
+            //   Navigator.pushReplacementNamed(context, LocationScreen.id);
+            // })
             .catchError(
               (onError) {
                 ScaffoldMessenger.of(context).showSnackBar(

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import '../../services/emailauth_service.dart';
+import 'reset_password_screen.dart';
 
 class EmailAuthScreen extends StatefulWidget {
   const EmailAuthScreen({Key? key}) : super(key: key);
@@ -18,6 +19,14 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   var _emailController = TextEditingController();
   var _passwordController = TextEditingController();
   EmailAuthentication _service = EmailAuthentication();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   _validateEmail() {
     if (_formKey.currentState!.validate()) {
       //if email and password has entered
@@ -120,6 +129,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 height: 10,
               ),
               TextField(
+                obscureText: true,
                 controller: _passwordController,
                 decoration: InputDecoration(
                   suffixIcon: _validate
@@ -156,6 +166,23 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 },
               ),
               SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                        context, ResetPasswordScreen.id);
+                  },
+                ),
+              ),
               Row(children: [
                 Text(_login ? 'New account ? ' : 'Already has an account?'),
                 TextButton(

@@ -1,9 +1,13 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
-
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_web_a2hs/screens/home_screen.dart';
+// import 'package:flutter_web_a2hs/screens/home_screen.dart';
 import 'package:location/location.dart';
+
+import 'login_screen.dart';
+// import 'login_screen.dart';
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({Key? key}) : super(key: key);
@@ -100,21 +104,28 @@ class _LocationScreenState extends State<LocationScreen> {
                             ),
                           ),
                           onPressed: () {
-                            setState(() {
-                              _loading = true;
+                            FirebaseAuth.instance.signOut().then((value) {
+                              Navigator.pushReplacementNamed(
+                                  context, LoginScreen.id);
                             });
-                            getLocation().then((value) {
-                              print(_locationData.latitude);
-                              if (value != null) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            HomeScreen(
-                                              locationData: _locationData,
-                                            )));
-                              }
-                            });
+                            FirebaseAuth.instance.signOut();
+                            //   setState(() {
+                            //     _loading = true;
+                            //   });
+                            //   getLocation().then(
+                            //     (value) {
+                            //       print(_locationData.latitude);
+                            //       if (value != null) {
+                            //         Navigator.pushReplacement(
+                            //             context,
+                            //             MaterialPageRoute(
+                            //                 builder: (BuildContext context) =>
+                            //                     HomeScreen(
+                            //                       locationData: _locationData,
+                            //                     )));
+                            //       }
+                            //     },
+                            //   );
                           },
                         ),
                 ),

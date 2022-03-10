@@ -1,8 +1,9 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_a2hs/screens/authentication/emai_verification_screen.dart';
 import 'package:flutter_web_a2hs/screens/authentication/phoneauth_screen.dart';
+import 'package:flutter_web_a2hs/screens/authentication/reset_password_screen.dart';
 import 'screens/MyHomePage.dart';
 import 'screens/authentication/email_auth_screen.dart';
 import 'screens/home_screen.dart';
@@ -64,6 +65,8 @@ class MyApp extends StatelessWidget {
         LocationScreen.id: (context) => LocationScreen(),
         HomeScreen.id: (context) => HomeScreen(),
         EmailAuthScreen.id: (context) => EmailAuthScreen(),
+        EmailVerificationScreen.id: (context) => EmailVerificationScreen(),
+        ResetPasswordScreen.id: (context) => ResetPasswordScreen(),
       },
     );
   }
