@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import '../screens/authentication/emai_verification_screen.dart';
-import '../screens/authentication/emai_verification_screen.dart';
 import '../screens/location_screen.dart';
 
 class EmailAuthentication {
@@ -60,40 +58,36 @@ class EmailAuthentication {
           .createUserWithEmailAndPassword(email: email, password: password);
       if (userCredential.user != null) {
         //login success. add user data to firestore
-        return users
-            .doc(userCredential.user?.email)
-            .set({
-              'uid': userCredential.user?.uid,
-              // 'mobile': null,
-              'email': userCredential.user?.email,
-            })
-            .then(
-              (value) async => {
-                //before going to location screen. will send email verification
-                // if (userCredential.user!.emailVerified)
-                //   {
-                //   },
-                await userCredential.user
-                    ?.sendEmailVerification()
-                    .then((value) {
-                  //after sending verifiaction email, screen will move to Email Verification Screen
-                  Navigator.pushReplacementNamed(
-                      context, EmailVerificationScreen.id);
-                }),
-              },
-            )
-            // .then((value) {
-            //   Navigator.pushReplacementNamed(context, LocationScreen.id);
-            // })
-            .catchError(
-              (onError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Fail to add user'),
-                  ),
-                );
-              },
+        return users.doc(userCredential.user?.email).set({
+          'email': userCredential.user?.email,
+          'uid': userCredential.user?.uid,
+        })
+            // .then(
+            //   (value) async => {
+            //     //before going to location screen. will send email verification
+            //     // if (userCredential.user!.emailVerified)
+            //     //   {
+            //     //   },
+            //     await userCredential.user
+            //         ?.sendEmailVerification()
+            //         .then((value) {
+            //       //after sending verifiaction email, screen will move to Email Verification Screen
+            //       Navigator.pushReplacementNamed(
+            //           context, EmailVerificationScreen.id);
+            //     }),
+            //   },
+            // )
+            .then((value) {
+          Navigator.pushReplacementNamed(context, LocationScreen.id);
+        }).catchError(
+          (onError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Fail to add user'),
+              ),
             );
+          },
+        );
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

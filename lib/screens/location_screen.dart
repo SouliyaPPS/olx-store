@@ -1,13 +1,8 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 // import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_web_a2hs/screens/home_screen.dart';
 import 'package:location/location.dart';
-
-import 'login_screen.dart';
-// import 'login_screen.dart';
 
 class LocationScreen extends StatefulWidget {
   const LocationScreen({Key? key}) : super(key: key);
@@ -25,6 +20,7 @@ class _LocationScreenState extends State<LocationScreen> {
   late PermissionStatus _permissionGranted;
   late LocationData _locationData;
 
+//get currentLocation here
   Future<LocationData?> getLocation() async {
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {
@@ -51,6 +47,67 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    showBottomScreen(context) {
+      showModalBottomSheet(
+        isScrollControlled: true,
+        enableDrag: true,
+        context: context,
+        builder: (context) {
+          return Column(
+            children: [
+              SizedBox(
+                height: 26,
+              ),
+              AppBar(
+                automaticallyImplyLeading: false,
+                iconTheme: IconThemeData(
+                  color: Colors.black,
+                ),
+                elevation: 1,
+                backgroundColor: Colors.white,
+                title: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.clear,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'Location',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: SizedBox(
+                    height: 40,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Search City, area or neighbourhood',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        icon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -62,7 +119,7 @@ class _LocationScreenState extends State<LocationScreen> {
             height: MediaQuery.of(context).size.height * 0.5,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: 15,
           ),
           Text(
             'Where do want\nto buy/sell products',
@@ -72,13 +129,14 @@ class _LocationScreenState extends State<LocationScreen> {
               fontSize: 25,
             ),
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+          SizedBox(height: 15),
           Text(
             'to enjoy all that we have to offer you\nwe need to know where to look for them',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12),
           ),
           SizedBox(height: 30),
+
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
             child: Row(
@@ -99,49 +157,86 @@ class _LocationScreenState extends State<LocationScreen> {
                           label: Padding(
                             padding: const EdgeInsets.only(top: 15, bottom: 15),
                             child: Text(
-                              'Around me',
+                              'Set location',
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ),
                           onPressed: () {
-                            FirebaseAuth.instance.signOut().then((value) {
-                              Navigator.pushReplacementNamed(
-                                  context, LoginScreen.id);
-                            });
-                            FirebaseAuth.instance.signOut();
-                            //   setState(() {
-                            //     _loading = true;
-                            //   });
-                            //   getLocation().then(
-                            //     (value) {
-                            //       print(_locationData.latitude);
-                            //       if (value != null) {
-                            //         Navigator.pushReplacement(
-                            //             context,
-                            //             MaterialPageRoute(
-                            //                 builder: (BuildContext context) =>
-                            //                     HomeScreen(
-                            //                       locationData: _locationData,
-                            //                     )));
-                            //       }
-                            //     },
-                            //   );
+                            showBottomScreen(context);
                           },
                         ),
                 ),
               ],
             ),
           ),
-          TextButton(
-            onPressed: () {},
-            child: Text('Set location manually',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  fontSize: 18,
-                  decoration: TextDecoration.underline,
-                )),
-          ),
+
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+          //   child: Row(
+          //     children: [
+          //       Expanded(
+          //         child: _loading
+          //             ? Center(
+          //                 child: CircularProgressIndicator(
+          //                 valueColor: AlwaysStoppedAnimation<Color>(
+          //                     Theme.of(context).primaryColor),
+          //               ))
+          //             : ElevatedButton.icon(
+          //                 style: ButtonStyle(
+          //                   backgroundColor: MaterialStateProperty.all<Color>(
+          //                       Theme.of(context).primaryColor),
+          //                 ),
+          //                 icon: Icon(CupertinoIcons.location_fill),
+          //                 label: Padding(
+          //                   padding: const EdgeInsets.only(top: 15, bottom: 15),
+          //                   child: Text(
+          //                     'Around me',
+          //                     style: TextStyle(fontWeight: FontWeight.bold),
+          //                   ),
+          //                 ),
+          //                 onPressed: () {
+          //                   // FirebaseAuth.instance.signOut().then((value) {
+          //                   //   Navigator.pushReplacementNamed(
+          //                   //       context, LoginScreen.id);
+          //                   // });
+          //                   // FirebaseAuth.instance.signOut();
+          //                   setState(() {
+          //                     _loading = true;
+          //                   });
+          //                   getLocation().then(
+          //                     (value) {
+          //                       print(_locationData.latitude);
+          //                       if (value != null) {
+          //                         FirebaseAuth.instance.signOut();
+          //                         Navigator.pushReplacement(
+          //                           context,
+          //                           MaterialPageRoute(
+          //                             builder: (BuildContext context) =>
+          //                                 HomeScreen(
+          //                               locationData: _locationData,
+          //                             ),
+          //                           ),
+          //                         );
+          //                       }
+          //                     },
+          //                   );
+          //                 },
+          //               ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+
+          // TextButton(
+          //   onPressed: () {},
+          //   child: Text('Set location manually',
+          //       style: TextStyle(
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.black,
+          //         fontSize: 18,
+          //         decoration: TextDecoration.underline,
+          //       )),
+          // ),
         ],
       ),
     );

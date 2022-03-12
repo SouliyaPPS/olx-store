@@ -1,8 +1,9 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import '../widgets/auth_ui.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key key}) : super(key: key);
   static const String id = 'login-screen';
 
   @override

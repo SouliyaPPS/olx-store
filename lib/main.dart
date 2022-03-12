@@ -10,6 +10,8 @@ import 'screens/home_screen.dart';
 import 'screens/location_screen.dart';
 import 'screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +27,15 @@ Future<void> main() async {
           measurementId: "G-5WDKFJDY7C"),
     );
   }
-
+  if (kIsWeb) {
+    // initialiaze the facebook javascript SDK
+    FacebookAuth.i.webInitialize(
+      appId: "388204125990623", //<-- YOUR APP_ID
+      cookie: true,
+      xfbml: true,
+      version: "v12.0",
+    );
+  }
   runApp(MyApp());
 }
 

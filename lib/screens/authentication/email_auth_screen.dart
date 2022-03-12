@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import '../../services/emailauth_service.dart';
 import 'reset_password_screen.dart';
+// import 'package:passwordfield/passwordfield.dart';
 
 class EmailAuthScreen extends StatefulWidget {
   const EmailAuthScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   var _emailController = TextEditingController();
   var _passwordController = TextEditingController();
   EmailAuthentication _service = EmailAuthentication();
-
+  bool _isObscure = true;
   @override
   void dispose() {
     _emailController.dispose();
@@ -101,7 +102,17 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
               SizedBox(
                 height: 10,
               ),
+              SizedBox(
+                height: 12,
+              ),
               TextFormField(
+                onChanged: (value) {
+                  if (_emailController.text.isNotEmpty) {
+                    setState(() {
+                      _validate = true;
+                    });
+                  }
+                },
                 validator: (value) {
                   //need to check email entered is a valid email or not. we will use package for that
                   final bool isValid =
@@ -129,18 +140,33 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 height: 10,
               ),
               TextField(
-                obscureText: true,
+                obscureText: _isObscure,
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  suffixIcon: _validate
+                  prefixIcon: _validate
                       ? IconButton(
-                          icon: Icon(Icons.clear),
+                          icon: Icon(_isObscure
+                              ? Icons.visibility_off
+                              : Icons.visibility),
                           onPressed: () {
-                            _passwordController.clear();
                             setState(() {
-                              _validate = false;
+                              _isObscure = !_isObscure;
                             });
                           },
+                        )
+                      : null,
+                  suffixIcon: _validate
+                      ? Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              _passwordController.clear();
+                              setState(() {
+                                _validate = false;
+                              });
+                            },
+                          ),
                         )
                       : null,
                   contentPadding: EdgeInsets.only(left: 10),
@@ -150,21 +176,75 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
                 ),
                 onChanged: (value) {
-                  if (_passwordController.text.isNotEmpty) {
-                    if (value.length > 3) {
-                      setState(() {
-                        _validate = true;
-                      });
-                    } else {
-                      setState(() {
-                        _validate = false;
-                      });
-                    }
+                  if (value.isNotEmpty) {
+                    setState(() {
+                      _validate = true;
+                    });
                   }
+
+                  // if (_passwordController.text.isNotEmpty) {
+                  //   if (value.length > 3) {
+                  //     setState(() {
+                  //       _validate = true;
+                  //     });
+                  //   } else {
+                  //     setState(() {
+                  //       _validate = false;
+                  //     });
+                  //   }
+                  // }
                 },
               ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              //   child: PasswordField(
+              //     backgroundColor: Colors.red.shade100,
+              //     controller: _passwordController,
+              //     errorMessage:
+              //         'required at least 1 letter and number 3+ chars',
+              //     passwordConstraint: r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$',
+              //     inputDecoration: PasswordDecoration(
+              //       inputPadding: const EdgeInsets.symmetric(horizontal: 10),
+              //       suffixIcon: const Icon(
+              //         Icons.not_accessible,
+              //         color: Colors.grey,
+              //       ),
+              //       inputStyle: const TextStyle(
+              //         fontSize: 14,
+              //       ),
+              //     ),
+              //     hintText: 'Password',
+              //     onChanged: (value) {
+              //       if (_passwordController.text.isNotEmpty) {
+              //         if (value.length > 3) {
+              //           setState(() {
+              //             _validate = true;
+              //           });
+              //         } else {
+              //           setState(() {
+              //             _validate = false;
+              //           });
+              //         }
+              //       }
+              //     },
+              //     border: PasswordBorder(
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //       focusedErrorBorder: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(12),
+              //         borderSide:
+              //             BorderSide(width: 2, color: Colors.red.shade200),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 10),
               Align(
                 alignment: Alignment.centerRight,
@@ -203,39 +283,72 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: AbsorbPointer(
-            absorbing: _validate ? false : true,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: _validate
-                    ? MaterialStateProperty.all(
-                        Theme.of(context).primaryColor) //if validated
-                    : MaterialStateProperty.all(Colors.grey), //if not validated
-              ),
-              onPressed: () {
-                _validateEmail();
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: _loading
-                    ? SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Colors.white),
-                        ),
-                      )
-                    : Text(
-                        '${_login ? 'login' : 'Register'}',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
+      // bottomNavigationBar: SafeArea(
+      //   child: Padding(
+      //     padding: const EdgeInsets.all(12.0),
+      //     child: AbsorbPointer(
+      //       absorbing: _validate ? false : true,
+      //       child: ElevatedButton(
+      //         style: ButtonStyle(
+      //           backgroundColor: _validate
+      //               ? MaterialStateProperty.all(
+      //                   Theme.of(context).primaryColor) //if validated
+      //               : MaterialStateProperty.all(Colors.grey), //if not validated
+      //         ),
+      //         onPressed: () {
+      //           _validateEmail();
+      //         },
+      //         child: Padding(
+      //           padding: const EdgeInsets.all(12.0),
+      //           child: _loading
+      //               ? SizedBox(
+      //                   height: 24,
+      //                   width: 24,
+      //                   child: CircularProgressIndicator(
+      //                     valueColor:
+      //                         AlwaysStoppedAnimation<Color>(Colors.white),
+      //                   ),
+      //                 )
+      //               : Text(
+      //                   '${_login ? 'login' : 'Register'}',
+      //                   style: TextStyle(
+      //                       color: Colors.white, fontWeight: FontWeight.bold),
+      //                 ),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: AbsorbPointer(
+          absorbing: _validate ? false : true,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).primaryColor,
+              shape: new RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
               ),
             ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: _loading
+                  ? SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                    )
+                  : Text(
+                      '${_login ? 'login' : 'Register'}',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+            ),
+            onPressed: () {
+              _validateEmail();
+            },
           ),
         ),
       ),
