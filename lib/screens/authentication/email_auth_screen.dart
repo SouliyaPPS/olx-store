@@ -1,3 +1,4 @@
+// ignore: unnecessary_import
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -72,15 +73,15 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
               SizedBox(
                 height: 40,
               ),
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.red.shade200,
-                child: Icon(
-                  CupertinoIcons.person_alt_circle,
-                  color: Colors.red,
-                  size: 60,
-                ),
-              ),
+              // CircleAvatar(
+              //   radius: 30,
+              //   backgroundColor: Colors.red.shade200,
+              //   child: Icon(
+              //     CupertinoIcons.person_alt_circle,
+              //     color: Colors.red,
+              //     size: 60,
+              //   ),
+              // ),
               SizedBox(
                 height: 12,
               ),

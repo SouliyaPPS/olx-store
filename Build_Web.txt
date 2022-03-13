@@ -1,5 +1,7 @@
 flutter build web --no-sound-null-safety
 
+flutter build web
+
 firebase deploy
 
 flutter run -d chrome --no-sound-null-safety

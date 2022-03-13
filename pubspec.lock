@@ -197,6 +197,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  country_state_city_picker:
+    dependency: "direct main"
+    description:
+      name: country_state_city_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.8"
+  country_state_city_pro:
+    dependency: "direct main"
+    description:
+      name: country_state_city_pro
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   crypto:
     dependency: transitive
     description:
@@ -204,6 +218,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  csc_picker:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: d40d866c7b631caa07a1acc5ef5a78b73d2c3289
+      url: "https://github.com/altafc22/csc_picker.git"
+    source: git
+    version: "0.2.6"
   csslib:
     dependency: transitive
     description:
@@ -373,13 +396,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
-  geocoder:
-    dependency: "direct main"
-    description:
-      name: geocoder
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1"
   geocoder2:
     dependency: "direct main"
     description:

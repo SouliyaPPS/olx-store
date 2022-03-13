@@ -1,5 +1,8 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 // import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:country_state_city_pro/country_state_city_pro.dart';
+// import 'package:csc_picker/csc_picker.dart';
+import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -19,6 +22,17 @@ class _LocationScreenState extends State<LocationScreen> {
   late bool _serviceEnabled;
   late PermissionStatus _permissionGranted;
   late LocationData _locationData;
+
+  /// Variables to store country state city data in onChanged method.
+  // String countryValue = "";
+  // String stateValue = "";
+  // String cityValue = "";
+  // String address = "";
+
+  late String countryValue;
+  late String stateValue;
+  late String cityValue;
+  late String address;
 
 //get currentLocation here
   Future<LocationData?> getLocation() async {
@@ -47,6 +61,10 @@ class _LocationScreenState extends State<LocationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ///Define Controller
+    // TextEditingController country = TextEditingController();
+    // TextEditingController state = TextEditingController();
+    // TextEditingController city = TextEditingController();
     showBottomScreen(context) {
       showModalBottomSheet(
         isScrollControlled: true,
@@ -102,6 +120,106 @@ class _LocationScreenState extends State<LocationScreen> {
                   ),
                 ),
               ),
+              ListTile(
+                onTap: () {},
+                horizontalTitleGap: 0.0,
+                leading: Icon(
+                  Icons.my_location,
+                  color: Colors.blue,
+                ),
+                title: Text(
+                  'Use current location',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  'Enable location',
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width, //screen size
+                color: Colors.grey.shade300,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, bottom: 4, right: 4),
+                  child: Text(
+                    'CHOOSE CITY',
+                    style: TextStyle(
+                      color: Colors.blueGrey.shade900,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                child: SelectState(
+                  onCountryChanged: (value) {
+                    setState(() {
+                      countryValue = value;
+                    });
+                  },
+                  onStateChanged: (value) {
+                    setState(() {
+                      stateValue = value;
+                    });
+                  },
+                  onCityChanged: (value) {
+                    setState(() {
+                      cityValue = value;
+                      address =
+                          '$countryValue, $stateValue, ${cityValue.substring(8)}';
+                    });
+                    print(address);
+                  },
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              //   child: CountryStateCityPicker(
+              //     country: country,
+              //     state: state,
+              //     city: city,
+              //     textFieldInputBorder: UnderlineInputBorder(),
+              //   ),
+              // ),
+
+              // Text("${country.text}, ${state.text}, ${city.text}")
+
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              //   child: CSCPicker(
+              //     layout: Layout.vertical,
+              //     // dropdownDecoration: BoxDecoration(shape: BoxShape.rectangle),
+              //     defaultCountry: DefaultCountry.Laos,
+              //     onCountryChanged: (value) {
+              //       setState(() {
+              //         countryValue = value;
+              //       });
+              //     },
+              //     onStateChanged: (value) {
+              //       setState(() {
+              //         stateValue = value!;
+              //       });
+              //     },
+              //     onCityChanged: (value) {
+              //       setState(() {
+              //         cityValue = value!;
+              //         address =
+              //             '$countryValue, $stateValue, ${cityValue.substring(8)}';
+              //       });
+              //       print(address);
+              //     },
+              //   ),
+              // ),
             ],
           );
         },
@@ -110,6 +228,7 @@ class _LocationScreenState extends State<LocationScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      resizeToAvoidBottomInset: true,
       body: Column(
         children: [
           Image.asset(
